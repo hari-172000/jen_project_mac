@@ -16,25 +16,25 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat "\"%DOCKER%\" build -t %IMAGE_NAME% ."
+                sh "\"%DOCKER%\" build -t %IMAGE_NAME% ."
             }
         }
 
         stage('Remove Old Container') {
             steps {
-                bat "\"%DOCKER%\" rm -f %CONTAINER_NAME% || exit 0"
+                sh "\"%DOCKER%\" rm -f %CONTAINER_NAME% || exit 0"
             }
         }
 
         stage('Run Container') {
             steps {
-                bat "\"%DOCKER%\" run -d --name %CONTAINER_NAME% -p 80:80 %IMAGE_NAME%"
+                sh "\"%DOCKER%\" run -d --name %CONTAINER_NAME% -p 80:80 %IMAGE_NAME%"
             }
         }
 
         stage('Verify') {
             steps {
-                bat "\"%DOCKER%\" ps --filter name=%CONTAINER_NAME%"
+                sh "\"%DOCKER%\" ps --filter name=%CONTAINER_NAME%"
             }
         }
     }
